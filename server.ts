@@ -1,9 +1,7 @@
+import "dotenv/config";
 import express from "express";
 import { createServer as createViteServer } from "vite";
-import dotenv from "dotenv";
 import apiApp, { initDb } from "./api/index.js";
-
-dotenv.config();
 
 async function startServer() {
   const app = express();

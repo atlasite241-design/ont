@@ -6,7 +6,18 @@ import dns from "dns";
 dns.setDefaultResultOrder('ipv4first');
 
 const { Pool } = pg;
-const DATABASE_URL = "postgresql://postgres.kdyqivtjmcfdhstjsokr:yasnabontfinderpro112233%40@aws-1-eu-central-1.pooler.supabase.com:6543/postgres";
+const DATABASE_URL = process.env.DATABASE_URL || "postgresql://postgres.kdyqivtjmcfdhstjsokr:ontfinderrayyan@aws-1-eu-central-1.pooler.supabase.com:6543/postgres";
+
+const maskedUrl = DATABASE_URL.replace(/:([^@]+)@/, (match, p1) => {
+  const masked = p1.length > 4 ? p1.substring(0, 2) + "****" + p1.substring(p1.length - 2) : "****";
+  console.log(`Password detected (length: ${p1.length})`);
+  return `:${masked}@`;
+});
+console.log("Database connection initialized using:", process.env.DATABASE_URL ? "Environment Variable" : "Hardcoded String");
+if (process.env.VERCEL) {
+  console.log("Running on Vercel environment");
+}
+console.log("Connection string (masked):", maskedUrl);
 
 export const pool = new Pool({
   connectionString: DATABASE_URL,
@@ -14,6 +25,19 @@ export const pool = new Pool({
 });
 
 export const initDb = async () => {
+  try {
+    await pool.query("SELECT 1");
+    console.log("Database connection test successful");
+  } catch (err) {
+    console.error("CRITICAL: Database connection test failed!");
+    console.error("Error details:", err instanceof Error ? err.message : String(err));
+    console.error("Check your DATABASE_URL environment variable in the Settings menu.");
+    if (err instanceof Error && err.message.includes("password authentication failed")) {
+      console.error("The password provided in the connection string is incorrect.");
+    }
+    // We don't throw here to allow the server to start, but it will fail on requests
+  }
+
   try {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS utilisateurs (
@@ -395,6 +419,28 @@ router.patch("/users/:username/block", async (req, res) => {
   } catch (err) {
     console.error("Block user error:", err);
     res.status(500).json({ success: false, message: "Erreur serveur" });
+  }
+});
+
+// Debug Route
+router.get("/db-debug", async (req, res) => {
+  try {
+    const source = process.env.DATABASE_URL ? "Environment Variable" : "Hardcoded String";
+    const result = await pool.query("SELECT 1 as connected");
+    res.json({ 
+      success: true, 
+      connected: result.rows[0].connected === 1,
+      source: source,
+      maskedUrl: maskedUrl
+    });
+  } catch (err) {
+    const source = process.env.DATABASE_URL ? "Environment Variable" : "Hardcoded String";
+    res.status(500).json({ 
+      success: false, 
+      error: err instanceof Error ? err.message : String(err),
+      source: source,
+      maskedUrl: maskedUrl
+    });
   }
 });
 

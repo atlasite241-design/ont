@@ -9,7 +9,7 @@ initDb().catch((err) => {
   console.error("CRITICAL: Database initialization failed:", err);
 });
 
-app.use(router);
+app.use('/api', router);
 
 // Add a global error handler for the API
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
