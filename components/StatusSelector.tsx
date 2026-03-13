@@ -53,11 +53,11 @@ export const StatusSelector: React.FC<StatusSelectorProps> = ({ value, onChange,
              setIsOpen(!isOpen);
            }
         }}
-        className={`flex items-center justify-between w-full px-3 bg-card backdrop-blur-md border ${isOpen ? 'border-cyan-500/50 ring-1 ring-cyan-500/20' : 'border-main'} hover:border-cyan-500/30 rounded-xl focus:outline-none transition-all cursor-pointer hover:bg-card/80 h-full group shadow-sm`}
+        className={`flex items-center justify-between w-full px-3 bg-card backdrop-blur-md rounded-xl focus:outline-none transition-all cursor-pointer hover:bg-card/80 h-full group shadow-sm`}
       >
          {value ? (
              <div className="flex items-center gap-3 w-full overflow-hidden">
-                <div className={`flex items-center justify-center rounded-lg bg-cyan-950/30 border border-cyan-500/20 shrink-0 ${compact ? 'w-5 h-5' : 'w-8 h-8'}`}>
+                <div className={`flex items-center justify-center rounded-lg bg-cyan-950/30 shrink-0 ${compact ? 'w-5 h-5' : 'w-8 h-8'}`}>
                     <Filter className={`${compact ? 'w-3 h-3' : 'w-4 h-4'} text-cyan-400`} />
                 </div>
                  <div className="flex flex-col items-start overflow-hidden gap-0.5">

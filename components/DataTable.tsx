@@ -171,7 +171,7 @@ const LocationBadge = ({ location, filter, isMatrixMode, activeTab }: { location
                 }
 
                 return (
-                    <div key={idx} className="flex items-center gap-1.5 px-2 py-1.5 rounded-md bg-card border border-main shadow-sm group-hover:border-cyan-500/30 group-hover:bg-surface transition-all">
+                    <div key={idx} className="flex items-center gap-1.5 px-2 py-1.5 rounded-md bg-card border border-black/50 shadow-sm group-hover:bg-surface transition-all">
                         <span className={`${labelSizeClass} font-black text-dim uppercase tracking-wider group-hover:text-dim`}>{item.label}</span>
                         <span 
                             className={`${textSizeClass} font-bold ${colorClass} font-mono leading-none ${shadowClass}`}
@@ -630,12 +630,12 @@ const DataTableRow = memo(({ row, searchTerm, locationFilter, onClick, isAlertsM
     return (
         <div 
             onClick={isIsolatedDisplay ? undefined : onClick}
-            className={`group relative flex items-center px-4 py-3 mb-2 rounded-xl border transition-all duration-300 ${isIsolatedDisplay ? 'cursor-default' : 'cursor-pointer'} gap-2 overflow-hidden
+            className={`group relative flex items-center px-4 py-3 mb-2 rounded-xl transition-all duration-300 ${isIsolatedDisplay ? 'cursor-default' : 'cursor-pointer'} gap-2 overflow-hidden
                 ${isCritical 
-                    ? 'bg-red-950/20 border-red-500/20 hover:border-red-500/40 hover:bg-red-950/30' 
+                    ? 'bg-red-950/20 hover:bg-red-950/30' 
                     : (isWorkflowSpecialRule || isNokiaYellowRule) 
-                        ? 'bg-yellow-500/10 border-yellow-500/20 hover:border-yellow-500/40 hover:bg-yellow-500/20'
-                        : 'bg-card border-main hover:border-cyan-500/30 hover:bg-surface hover:shadow-[0_0_20px_rgba(6,182,212,0.1)]'
+                        ? 'bg-yellow-500/10 hover:bg-yellow-500/20'
+                        : 'bg-card hover:bg-surface hover:shadow-[0_0_20px_rgba(6,182,212,0.1)]'
                 }`}
         >
             <div className={`absolute left-0 top-0 bottom-0 w-1 transition-colors duration-300 ${isCritical ? 'bg-red-500' : isWorkflowSpecialRule ? 'bg-yellow-500' : 'bg-transparent group-hover:bg-cyan-500'}`}></div>
@@ -666,7 +666,7 @@ const DataTableRow = memo(({ row, searchTerm, locationFilter, onClick, isAlertsM
             </div>
 
             {/* Col 2: Matrix(SN EN HÉXA) / Simple(SN EN HÉXA) */}
-            <div className={`${isMatrixMode ? 'w-[20%]' : 'w-[22%]'} flex items-center border-l border-main pl-4 overflow-hidden`}>
+            <div className={`${isMatrixMode ? 'w-[20%]' : 'w-[22%]'} flex items-center pl-4 overflow-hidden`}>
                  <div className="py-0.5">
                     {renderSN()}
                  </div>
@@ -675,7 +675,7 @@ const DataTableRow = memo(({ row, searchTerm, locationFilter, onClick, isAlertsM
             {isMatrixMode ? (
                 <>
                     {/* Matrix Col 3: EMPLACEMENT - CUSTOM FORMAT: NOM MSAN: Slot :X/Port :Y */}
-                    <div className="w-[25%] flex items-center gap-2 border-l border-main pl-3 overflow-hidden">
+                    <div className="w-[25%] flex items-center gap-2 pl-3 overflow-hidden">
                         {isAlclCritical ? (
                             <div className="flex items-center gap-2">
                                 <span className="text-xs font-mono font-black text-red-500 tracking-widest">---</span>
@@ -697,7 +697,7 @@ const DataTableRow = memo(({ row, searchTerm, locationFilter, onClick, isAlertsM
                     </div>
 
                     {/* Matrix Col 4: DATE ET HEURE (Previously Col 3) */}
-                    <div className="w-[20%] flex items-center justify-start border-l border-main pl-4 overflow-hidden">
+                    <div className="w-[20%] flex items-center justify-start pl-4 overflow-hidden">
                         {(isAlclCritical || isImplicitHwtc || isWorkflowSpecialRule) ? (
                             <div className="flex items-center gap-2">
                                 <span className={`text-xs font-mono font-black tracking-widest ${isAlclCritical ? 'text-red-500' : 'text-yellow-500'}`}>---</span>
@@ -718,7 +718,7 @@ const DataTableRow = memo(({ row, searchTerm, locationFilter, onClick, isAlertsM
                     </div>
 
                     {/* Matrix Col 5: STATUT */}
-                    <div className="w-[10%] flex items-center justify-center border-l border-main pl-2 overflow-hidden">
+                    <div className="w-[10%] flex items-center justify-center pl-2 overflow-hidden">
                         <div className="flex items-center">
                             {isCritical ? (
                                 <div className="flex items-center gap-2 px-2 py-1 rounded bg-red-500/10 border border-red-500/20 shadow-[0_0_10px_rgba(239,68,68,0.1)]">
@@ -744,12 +744,12 @@ const DataTableRow = memo(({ row, searchTerm, locationFilter, onClick, isAlertsM
             ) : (
                 <>
                     {/* Standard Col 3: EMPLACEMENT */}
-                    <div className="w-[23%] flex items-center gap-2 border-l border-main pl-3 overflow-hidden">
+                    <div className="w-[23%] flex items-center gap-2 pl-3 overflow-hidden">
                         <LocationBadge location={col2} filter={locationFilter} isMatrixMode={isMatrixMode} activeTab={activeTab} />
                     </div>
 
                     {/* Standard Col 4: SN ASCII */}
-                    <div className="w-[15%] flex items-center justify-start border-l border-main pl-4 overflow-hidden">
+                    <div className="w-[15%] flex items-center justify-start pl-4 overflow-hidden">
                         <div className="flex items-center gap-2 w-full">
                             <div className="flex flex-col items-start justify-center w-full">
                                     <span className={`text-sm font-mono font-black tracking-widest truncate block
@@ -772,7 +772,7 @@ const DataTableRow = memo(({ row, searchTerm, locationFilter, onClick, isAlertsM
                     </div>
 
                     {/* Standard Col 5: STATUS */}
-                    <div className="w-[10%] flex items-center justify-center border-l border-main pl-2 overflow-hidden">
+                    <div className="w-[10%] flex items-center justify-center pl-2 overflow-hidden">
                         <div className="flex items-center">
                             {isCritical ? (
                                 <div className="flex items-center gap-2 px-2 py-1 rounded bg-red-500/10 border border-red-500/20 shadow-[0_0_10px_rgba(239,68,68,0.1)]">

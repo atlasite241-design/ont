@@ -36,6 +36,16 @@ const App: React.FC = () => {
   const [theme, setTheme] = useState<Theme>(localStorage.getItem('theme') as Theme || 'midnight');
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
     document.body.className = `theme-${theme}`;
     localStorage.setItem('theme', theme);
   }, [theme]);
@@ -131,7 +141,9 @@ const App: React.FC = () => {
     
     const checkStatus = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/status/${encodeURIComponent(user.username)}`);
+        const url = `${import.meta.env.VITE_API_URL || ''}/api/auth/status/${encodeURIComponent(user.username)}`;
+        console.log("Checking status for:", user.username, "URL:", url);
+        const res = await fetch(url);
         if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
           const data = await res.json();
           if (data.is_blocked) {
@@ -1524,7 +1536,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="h-screen bg-transparent font-sans text-slate-200 flex overflow-hidden">
+    <div className="h-screen bg-transparent font-sans text-slate-200 flex overflow-hidden border-none">
       {isBlockedLive && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-red-950/90 backdrop-blur-xl animate-fade-in overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-40 mix-blend-overlay"></div>
@@ -1650,41 +1662,10 @@ const App: React.FC = () => {
                         activeTab={activeTab}
                     />
                     </div>
-                    {activeTab === 'archive' && archiveData.length > 0 && (
-                        <div className="flex justify-end items-center gap-4 px-6 py-3 animate-fade-in-up shrink-0 z-10 relative">
-                            <button 
-                                onClick={handleExport}
-                                className="flex items-center justify-center gap-2 px-6 py-2 backdrop-blur-lg border font-bold rounded-xl text-xs transition-all duration-300 uppercase tracking-widest shadow-[0_4px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:scale-95 bg-blue-600/20 border-blue-400/30 text-blue-100 hover:bg-blue-600/30 hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] hover:border-blue-400/50 group"
-                            >
-                                <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform duration-300 text-blue-200" />
-                                EXPORTER
-                            </button>
-                            <button 
-                                onClick={() => {
-                                    soundService.playClick();
-                                    if (window.confirm("Êtes-vous certain de vouloir supprimer les données enregistrées dans l'archive ?")) {
-                                        handleClearArchive();
-                                    }
-                                }}
-                                className="text-[10px] font-bold text-red-400 hover:text-red-300 uppercase tracking-widest border border-red-500/20 bg-red-500/5 px-4 py-2 rounded-xl transition-all"
-                            >
-                                VIDER LA FILE ARCHIVE
-                            </button>
-                        </div>
-                    )}
                 </>
             )}
 
-            {data.length > 0 && activeTab !== 'settings' && activeTab !== 'archive' && activeTab !== 'admin' && activeTab !== 'duplicates' && (activeTab !== 'workflow' || (filters.massiveSns && filters.massiveSns.length > 0)) && (
-               <div className="flex justify-start px-6 mt-4 mb-2 animate-fade-in-up">
-                   <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-950 border border-cyan-500/30 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.15)] group hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] transition-all cursor-help">
-                      {getBadgeIcon()}
-                      <span className="text-[9px] font-bold text-cyan-400 tracking-[0.2em] uppercase">
-                      {getBadgeLabel()}
-                      </span>
-                  </div>
-               </div>
-            )}
+{/* Badge removed */}
 
             {activeTab === 'matrix' ? (
               <div className="shrink-0 z-10 relative">

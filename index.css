@@ -197,3 +197,8 @@ body {
 .compact-mode {
   --spacing-multiplier: 0.75;
 }
+
+/* Remove all white borders */
+[class*="border-white"] {
+  border-color: transparent !important;
+}

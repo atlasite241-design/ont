@@ -112,11 +112,11 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
   return (
     <div className="w-full mt-4 mb-1 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
-      <div className="flex items-center gap-3 bg-surface/60 backdrop-blur-2xl border border-main rounded-[1.5rem] p-2.5 shadow-2xl">
+      <div className="flex items-center gap-3 bg-surface/60 backdrop-blur-2xl rounded-[1.5rem] p-2.5 shadow-2xl">
         
         {/* Left Section: Filter Icon + Label */}
-        <div className={`flex items-center gap-3 pl-2 pr-4 border-r border-main group ${!isDataLoaded ? 'opacity-40 pointer-events-none filter grayscale' : ''}`}>
-          <button className="w-10 h-10 flex items-center justify-center rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20 hover:scale-105 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all duration-300 group-hover:rotate-12 active:scale-95">
+        <div className={`flex items-center gap-3 pl-2 pr-4 group ${!isDataLoaded ? 'opacity-40 pointer-events-none filter grayscale' : ''}`}>
+          <button className="w-10 h-10 flex items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 hover:scale-105 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all duration-300 group-hover:rotate-12 active:scale-95">
             <Filter className="w-5 h-5 group-hover:scale-110 transition-transform" />
           </button>
           <span className="text-[10px] font-bold text-dim uppercase tracking-[0.2em] whitespace-nowrap group-hover:text-cyan-400 transition-colors hidden xl:inline-block">
@@ -134,7 +134,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
             <input
               type="text"
               disabled={isSnInputDisabled}
-              className="block w-full pl-10 pr-4 py-3 bg-card backdrop-blur-sm border border-main focus:border-cyan-500/40 rounded-xl text-main placeholder-dim focus:outline-none transition-all text-xs font-bold tracking-wider disabled:cursor-not-allowed disabled:bg-card/50 hover:bg-card/80 hover:border-main/50"
+              className="block w-full pl-10 pr-4 py-3 bg-card backdrop-blur-sm rounded-xl text-main placeholder-dim focus:outline-none transition-all text-xs font-bold tracking-wider disabled:cursor-not-allowed disabled:bg-card/50 hover:bg-card/80"
               placeholder="Recherche de numéro de série (SN)..."
               value={localSn}
               onChange={(e) => setLocalSn(e.target.value)}
@@ -151,7 +151,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
                 <input
                 type="text"
                 disabled={isLocationInputDisabled}
-                className="block w-full pl-10 pr-4 py-3 bg-card backdrop-blur-sm border border-main focus:border-cyan-500/40 rounded-xl text-main placeholder-dim focus:outline-none transition-all text-xs font-bold tracking-wider disabled:cursor-not-allowed disabled:bg-card/50 hover:bg-card/80 hover:border-main/50"
+                className="block w-full pl-10 pr-4 py-3 bg-card backdrop-blur-sm rounded-xl text-main placeholder-dim focus:outline-none transition-all text-xs font-bold tracking-wider disabled:cursor-not-allowed disabled:bg-card/50 hover:bg-card/80"
                 placeholder={activeTab === 'recap' ? "RECHERCHE PAR NOM MSAN" : "RECHERCHER MSAN..."}
                 value={localLocation}
                 onChange={(e) => setLocalLocation(e.target.value)}
@@ -182,7 +182,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
         </div>
 
         {/* Right Section: Actions */}
-        <div className="flex items-center gap-3 pl-4 border-l border-main pr-1">
+        <div className="flex items-center gap-3 pl-4 pr-1">
           {/* RESET Button - Glassmorphism - Conditionally rendered */}
           {showResetButton && (
             <button 
@@ -194,10 +194,10 @@ const ActionBar: React.FC<ActionBarProps> = ({
                   onReset();
               }}
               disabled={!isDataLoaded}
-              className={`flex items-center gap-2 px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.15em] backdrop-blur-md border rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 group
+              className={`flex items-center gap-2 px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.15em] backdrop-blur-md rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 group
                 ${!isDataLoaded 
-                    ? 'opacity-50 cursor-not-allowed bg-surface/5 border-main text-dim' 
-                    : 'text-dim bg-surface/5 border-main hover:bg-surface/10 hover:text-main hover:border-main/50 hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)] active:scale-95'
+                    ? 'opacity-50 cursor-not-allowed bg-surface/5 text-dim' 
+                    : 'text-dim bg-surface/5 hover:bg-surface/10 hover:text-main hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)] active:scale-95'
                 }`}
             >
               <RotateCcw className={`w-4 h-4 transition-transform duration-500 ${!isDataLoaded ? 'text-dim' : 'text-dim group-hover:-rotate-180 group-hover:text-main'}`} />
@@ -207,7 +207,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
           {/* Timestamp Indicator */}
           {lastImportDate && activeTab !== 'recap' && activeTab !== 'workflow' && (
-            <div className="flex items-center gap-2.5 px-4 py-2 bg-card backdrop-blur-md border border-cyan-500/20 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.05)] transition-all duration-300">
+            <div className="flex items-center gap-2.5 px-4 py-2 bg-card backdrop-blur-md rounded-full shadow-[0_0_15px_rgba(6,182,212,0.05)] transition-all duration-300">
               <FileText className="w-3.5 h-3.5 text-cyan-400" />
               <span className="text-[10px] font-mono font-bold text-cyan-400 tracking-wider whitespace-nowrap">
                 Exporté : {formatDisplayDate(lastImportDate)}
@@ -231,10 +231,10 @@ const ActionBar: React.FC<ActionBarProps> = ({
                 <button
                   onClick={() => fileInputRef2.current?.click()}
                   disabled={isLoading}
-                  className={`flex items-center justify-center gap-2 px-6 py-1.5 backdrop-blur-lg border font-bold rounded-xl text-[10px] transition-all duration-300 uppercase tracking-widest shadow-[0_4px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group ${
+                  className={`flex items-center justify-center gap-2 px-6 py-1.5 backdrop-blur-lg font-bold rounded-xl text-[10px] transition-all duration-300 uppercase tracking-widest shadow-[0_4px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group ${
                       simpleMode 
-                      ? 'bg-purple-600/20 border-purple-400/30 text-purple-100 hover:bg-purple-600/30 hover:shadow-[0_0_25px_rgba(147,51,234,0.4)] hover:border-purple-400/50' 
-                      : 'bg-purple-600/20 border-purple-400/30 text-purple-100 hover:bg-purple-600/30 hover:shadow-[0_0_25px_rgba(147,51,234,0.4)] hover:border-purple-400/50'
+                      ? 'bg-purple-600/20 text-purple-100 hover:bg-purple-600/30 hover:shadow-[0_0_25px_rgba(147,51,234,0.4)]' 
+                      : 'bg-purple-600/20 text-purple-100 hover:bg-purple-600/30 hover:shadow-[0_0_25px_rgba(147,51,234,0.4)]'
                   }`}
                   title={""}
                 >
@@ -270,10 +270,10 @@ const ActionBar: React.FC<ActionBarProps> = ({
                       }
                   }}
                   disabled={!(isWorkflow || activeTab === 'recap') && isLoading}
-                  className={`flex items-center justify-center gap-2 px-6 py-1.5 backdrop-blur-lg border font-bold rounded-xl text-[10px] transition-all duration-300 uppercase tracking-widest shadow-[0_4px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group ${
+                  className={`flex items-center justify-center gap-2 px-6 py-1.5 backdrop-blur-lg font-bold rounded-xl text-[10px] transition-all duration-300 uppercase tracking-widest shadow-[0_4px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group ${
                       simpleMode
-                      ? 'bg-red-600/20 border-red-400/30 text-red-100 hover:bg-red-600/30 hover:shadow-[0_0_25px_rgba(220,38,38,0.4)] hover:border-red-400/50'
-                      : 'bg-blue-600/20 border-blue-400/30 text-blue-100 hover:bg-blue-600/30 hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] hover:border-blue-400/50'
+                      ? 'bg-red-600/20 text-red-100 hover:bg-red-600/30 hover:shadow-[0_0_25px_rgba(220,38,38,0.4)]'
+                      : 'bg-blue-600/20 text-blue-100 hover:bg-blue-600/30 hover:shadow-[0_0_25px_rgba(37,99,235,0.4)]'
                   }`}
                   title={""}
                 >
