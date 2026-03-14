@@ -171,7 +171,7 @@ const LocationBadge = ({ location, filter, isMatrixMode, activeTab }: { location
                 }
 
                 return (
-                    <div key={idx} className="flex items-center gap-1.5 px-2 py-1.5 rounded-md bg-card border border-main shadow-sm group-hover:border-cyan-500/30 group-hover:bg-surface transition-all">
+                    <div key={idx} className="flex items-center gap-1.5 px-2 py-1.5 rounded-md bg-card border border-black/50 shadow-sm group-hover:bg-surface transition-all">
                         <span className={`${labelSizeClass} font-black text-dim uppercase tracking-wider group-hover:text-dim`}>{item.label}</span>
                         <span 
                             className={`${textSizeClass} font-bold ${colorClass} font-mono leading-none ${shadowClass}`}
